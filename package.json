@@ -1,15 +1,30 @@
 {
-    "name": "shotcut",
+    "name": "shortcut",
     "displayName": "Useful Shortcuts",
     "description": "Extentension that holds all your shortcuts.",
     "version": "0.0.1",
-    "publisher": "jeisonJHA",
+    "publisher": "jeisonjha",
+    "author": {
+        "name": "Jeison Azevedo",
+        "email": "j3ison@gmail.com"
+    },
     "engines": {
         "vscode": "^1.21.0"
     },
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "shortcut"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/JeisonJHA/vscode-shortcut"
+    },
+    "bugs": {
+        "url": "https://github.com/JeisonJHA/vscode-shortcut/issues"
+    },
+    "homepage": "https://github.com/JeisonJHA/vscode-shortcut/blob/master/README.md",
     "activationEvents": [
         "*"
     ],
