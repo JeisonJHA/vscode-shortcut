@@ -1,0 +1,5 @@
+out
+node_modules
+*.rar
+*.zip
+vsc-extension-quickstart.md
