@@ -1,137 +1,137 @@
 {
-    "name": "shortcut",
-    "displayName": "Useful Shortcuts",
-    "description": "Extentension that holds all your shortcuts.",
-    "version": "0.0.1",
-    "publisher": "jeisonjha",
-    "author": {
-        "name": "Jeison Azevedo",
-        "email": "j3ison@gmail.com"
-    },
-    "engines": {
-        "vscode": "^1.21.0"
-    },
-    "categories": [
-        "Other"
-    ],
-    "keywords": [
-        "shortcut"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/JeisonJHA/vscode-shortcut"
-    },
-    "bugs": {
-        "url": "https://github.com/JeisonJHA/vscode-shortcut/issues"
-    },
-    "homepage": "https://github.com/JeisonJHA/vscode-shortcut/blob/master/README.md",
-    "activationEvents": [
-        "*"
-    ],
-    "main": "./out/src/extension",
-    "contributes": {
-        "commands": [
-            {
-                "command": "shortcutsProvider.refreshEntry",
-                "title": "Refresh",
-                "icon": {
-                    "light": "img/refresh-light.svg",
-                    "dark": "img/refresh-dark.svg"
-                }
-            },
-            {
-                "command": "shortcutsProvider.editShortcut",
-                "title": "Edit shortcuts",
-                "icon": {
-                    "light": "img/edit-shortcut-light.svg",
-                    "dark": "img/edit-shortcut-dark.svg"
-                }
-            },
-            {
-                "command": "shortcutsProvider.addFolder",
-                "title": "Add folder",
-                "icon": {
-                    "light": "img/folderAdd-light.svg",
-                    "dark": "img/folderAdd-dark.svg"
-                }
-            },
-            {
-                "command": "shortcutsProvider.addShortcut",
-                "title": "Add shortcut",
-                "icon": {
-                    "light": "img/fileAdd-light.svg",
-                    "dark": "img/fileAdd-dark.svg"
-                }
-            },
-            {
-                "command": "shortcutsProvider.remove",
-                "title": "Remove shortcut"
-            }
-        ],
-        "views": {
-            "explorer": [
-                {
-                    "id": "shortcutsProvider",
-                    "name": "Shortcuts"
-                }
-            ]
-        },
-        "menus": {
-            "view/title": [
-                {
-                    "command": "shortcutsProvider.refreshEntry",
-                    "when": "view == shortcutsProvider",
-                    "group": "navigation@4"
-                },
-                {
-                    "command": "shortcutsProvider.editShortcut",
-                    "when": "view == shortcutsProvider",
-                    "group": "navigation@3"
-                },
-                {
-                    "command": "shortcutsProvider.addFolder",
-                    "when": "view == shortcutsProvider",
-                    "group": "navigation@1"
-                },
-                {
-                    "command": "shortcutsProvider.addShortcut",
-                    "when": "view == shortcutsProvider",
-                    "group": "navigation@2"
-                }
-            ],
-            "view/item/context": [
-                {
-                    "command": "shortcutsProvider.addFolder",
-                    "when": "viewItem == folderNode",
-                    "group": "folderNode"
-                },
-                {
-                    "command": "shortcutsProvider.addShortcut",
-                    "when": "viewItem == folderNode",
-                    "group": "folderNode"
-                },
-                {
-                    "command": "shortcutsProvider.remove",
-                    "when": "!(viewItem != folderNode && viewItem != shortcutNode)",
-                    "group": "folderNode"
-                }
-            ]
+  "name": "shortcut",
+  "displayName": "Useful Shortcuts",
+  "description": "Extentension that holds all your shortcuts.",
+  "version": "0.0.2",
+  "publisher": "jeisonjha",
+  "author": {
+    "name": "Jeison Azevedo",
+    "email": "j3ison@gmail.com"
+  },
+  "engines": {
+    "vscode": "^1.21.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "shortcut"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JeisonJHA/vscode-shortcut"
+  },
+  "bugs": {
+    "url": "https://github.com/JeisonJHA/vscode-shortcut/issues"
+  },
+  "homepage": "https://github.com/JeisonJHA/vscode-shortcut/blob/master/README.md",
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "shortcutsProvider.refreshEntry",
+        "title": "Refresh",
+        "icon": {
+          "light": "img/refresh-light.svg",
+          "dark": "img/refresh-dark.svg"
         }
+      },
+      {
+        "command": "shortcutsProvider.editShortcut",
+        "title": "Edit shortcuts",
+        "icon": {
+          "light": "img/edit-shortcut-light.svg",
+          "dark": "img/edit-shortcut-dark.svg"
+        }
+      },
+      {
+        "command": "shortcutsProvider.addFolder",
+        "title": "Add folder",
+        "icon": {
+          "light": "img/folderAdd-light.svg",
+          "dark": "img/folderAdd-dark.svg"
+        }
+      },
+      {
+        "command": "shortcutsProvider.addShortcut",
+        "title": "Add shortcut",
+        "icon": {
+          "light": "img/fileAdd-light.svg",
+          "dark": "img/fileAdd-dark.svg"
+        }
+      },
+      {
+        "command": "shortcutsProvider.remove",
+        "title": "Remove shortcut"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "shortcutsProvider",
+          "name": "Shortcuts"
+        }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install"
-    },
-    "devDependencies": {
-        "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32",
-        "tslint": "5.11.0",
-        "typescript": "^2.0.3",
-        "mocha": "^2.3.3",
-        "vscode": "^1.1.17"
-    },
-    "dependencies": {
-        "node-uuid": "^1.4.7"
+    "menus": {
+      "view/title": [
+        {
+          "command": "shortcutsProvider.refreshEntry",
+          "when": "view == shortcutsProvider",
+          "group": "navigation@4"
+        },
+        {
+          "command": "shortcutsProvider.editShortcut",
+          "when": "view == shortcutsProvider",
+          "group": "navigation@3"
+        },
+        {
+          "command": "shortcutsProvider.addFolder",
+          "when": "view == shortcutsProvider",
+          "group": "navigation@1"
+        },
+        {
+          "command": "shortcutsProvider.addShortcut",
+          "when": "view == shortcutsProvider",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "shortcutsProvider.addFolder",
+          "when": "viewItem == folderNode",
+          "group": "folderNode"
+        },
+        {
+          "command": "shortcutsProvider.addShortcut",
+          "when": "viewItem == folderNode",
+          "group": "folderNode"
+        },
+        {
+          "command": "shortcutsProvider.remove",
+          "when": "!(viewItem != folderNode && viewItem != shortcutNode)",
+          "group": "folderNode"
+        }
+      ]
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.40",
+    "@types/mocha": "^2.2.32",
+    "tslint": "5.11.0",
+    "typescript": "^2.0.3",
+    "mocha": "^2.3.3",
+    "vscode": "^1.1.17"
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7"
+  }
 }
