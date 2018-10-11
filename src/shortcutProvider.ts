@@ -48,21 +48,19 @@ export class ShortcutProvider implements vscode.TreeDataProvider<vscode.TreeItem
           if (i.type === "folder") {
             return new Folder(i.id, i.name, i.files, vscode.TreeItemCollapsibleState.Collapsed);
           } else {
+            let name: string;
             let cmd: vscode.Command;
-            if (i.type !== "cmd") {
-              cmd = {
-                command: "shortcutsProvider.run", title: "", arguments: [
-                  i.name,
-                  i.path.replace("${workspaceFolder}", vscode.workspace.rootPath),
-                ],
-              };
+            if (i.type === "cmd") {
+              name = "shortcutsProvider.runCMD";
             } else {
-              cmd = {
-                command: "shortcutsProvider.runCMD", title: "", arguments: [
-                  i.path.replace("${workspaceFolder}", vscode.workspace.rootPath),
-                  i.param.replace("${workspaceFolder}", vscode.workspace.rootPath)],
-              };
+              name = "shortcutsProvider.run";
             }
+            cmd = {
+              command: name, title: "", arguments: [
+                i.name,
+                i.path.replace("${workspaceFolder}", vscode.workspace.rootPath),
+                i.param.replace("${workspaceFolder}", vscode.workspace.rootPath)],
+            };
             return new ShortcutClass(i.id, i.name, i.path, i.type, i.param, vscode.TreeItemCollapsibleState.None, cmd);
           }
         }));

@@ -1,6 +1,6 @@
 "use strict";
 
-import { exec, spawn } from "child_process";
+import { exec, execFile, spawn } from "child_process";
 import fs = require("fs");
 import { window } from "vscode";
 import * as vscode from "vscode";
@@ -14,28 +14,22 @@ export interface IApplication {
 export class AppRunner {
 
     public static run(appName: string, appPath: string, param?: string) {
-        if (!fs.existsSync(appPath)) {
-            window.showErrorMessage("Application " + appPath + " not found!");
-            return;
-        }
-
-        exec('start \"app cmd\" \"' + appPath, (error, stdout, stderr) => {
-            if (error) {
-                console.log("error: " + error);
-            } else {
-                console.log("stdout: " + stdout);
-                console.log("stderr: " + stderr);
-            }
-        });
+        if (param) { appPath += " " + param; }
+        exec('start \"app cmd\" ' +
+            appPath, (error, stdout, stderr) => {
+                if (error) {
+                    window.showErrorMessage("Command finalized with error: " + error);
+                    console.log("error: " + error);
+                } else {
+                    window.showInformationMessage("Command finalized.");
+                    console.log("stdout: " + stdout);
+                    console.log("stderr: " + stderr);
+                }
+            });
     }
 
     public static runCMD(appPath: string, param?: string): void {
-        if (!fs.existsSync(appPath)) {
-            window.showErrorMessage("Application " + appPath + " not found!");
-            return;
-        }
-
-        const channel = vscode.window.createOutputChannel("RunCommand");
+        const channel = window.createOutputChannel("RunCommand");
         channel.show();
 
         const rc = spawn(appPath, param.split(" "));
@@ -47,6 +41,7 @@ export class AppRunner {
             channel.appendLine("ERROR: " + data.toString());
         });
         rc.on("exit", (code) => {
+            channel.appendLine("Command finalized.");
             console.log("child process exited with code " + code.toString());
         });
     }

@@ -112,7 +112,12 @@
         },
         {
           "command": "shortcutsProvider.remove",
-          "when": "!(viewItem != folderNode && viewItem != shortcutNode)",
+          "when": "viewItem == folderNode",
+          "group": "folderNode"
+        },
+        {
+          "command": "shortcutsProvider.remove",
+          "when": "viewItem == shortcutNode",
           "group": "folderNode"
         }
       ]
