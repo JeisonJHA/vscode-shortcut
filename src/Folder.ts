@@ -15,6 +15,6 @@ export class Folder extends vscode.TreeItem {
         public readonly command?: vscode.Command,
     ) {
         super(label, collapsibleState);
-        this.resourceUri = vscode.Uri.parse("\\" + label + "\\");
+        this.resourceUri = vscode.Uri.file("\\" + label + "\\");
     }
 }

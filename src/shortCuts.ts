@@ -1,6 +1,7 @@
 import fs = require("fs");
 import uuid = require("node-uuid");
 import * as vscode from "vscode";
+import { Utils } from "./Utils";
 
 interface Item {
   id: string;
@@ -117,9 +118,6 @@ export class ShortcutStorage {
     itemList = itemList.filter((item) => item.id !== id);
     itemList.forEach((item) => item.type === "folder" ?
       item.files = this.removeFromTree(item.files, id) : item);
-    // item.files = item.files.filter((i) => i.id !== id)
-    //   .map((i) => i.type === "folder" ? this.removeFromTree(i.files, id) : i) : item);
-    // itemList = itemList.map((item) => item.type === "folder" ? this.removeFromTree(item.files, id) : item);
     return itemList;
   }
   public pop(id: string) {
@@ -171,12 +169,47 @@ export class ShortcutStorage {
     fs.writeFileSync(this.filename, JSON.stringify(this.itemList, null, "\t"));
   }
 
-  public map(): any {
+  public map(): any[] {
     return this.mapArray(this.itemList);
   }
 
-  public mapArray(array): any {
-    const newItems = array.map((item) => {
+  public mapForQuick(): any[] {
+    const newItems = this.convertTreeToList(this.itemList);
+    return newItems
+      .map((item) => {
+        return {
+          label: item.name,
+          description: (item as AppItem).path,
+          cmd: Utils.ReturnCmd((item as AppItem))
+        };
+      });
+  }
+
+  private convertTreeToList(root: ItemList) {
+    const stack = [...root];
+    const array = [];
+    const hashMap = {};
+
+    while (stack.length !== 0) {
+      const node = stack.pop() as Item;
+      if (node.type !== "folder") {
+        this.visitNode(node, hashMap, array);
+      } else {
+        for (let i = (node as FolderItem).files.length - 1; i >= 0; i--) {
+          stack.push((node as FolderItem).files[i]);
+        }
+      }
+    }
+
+    return array;
+  }
+
+  private visitNode(node: any, hashMap: any, array: any[]) {
+    array.push(node);
+  }
+
+  public mapArray(array: any[]): any[] {
+    return array.map((item) => {
       if (item.type === "folder") {
         return {
           id: item.id,
@@ -194,6 +227,5 @@ export class ShortcutStorage {
         };
       }
     });
-    return newItems;
   }
 }

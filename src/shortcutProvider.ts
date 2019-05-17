@@ -6,7 +6,7 @@ import { Folder } from "./Folder";
 import { PathUtils } from "./PathUtils";
 import { ShortcutClass } from "./ShortcutClass";
 import { ShortcutStorage } from "./shortCuts";
-
+import { Utils } from "./Utils";
 export const CFG_FILE = "shortcuts.json";
 
 export class ShortcutProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
@@ -48,19 +48,8 @@ export class ShortcutProvider implements vscode.TreeDataProvider<vscode.TreeItem
           if (i.type === "folder") {
             return new Folder(i.id, i.name, i.files, vscode.TreeItemCollapsibleState.Collapsed);
           } else {
-            let name: string;
             let cmd: vscode.Command;
-            if (i.type === "cmd") {
-              name = "shortcutsProvider.runCMD";
-            } else {
-              name = "shortcutsProvider.run";
-            }
-            cmd = {
-              command: name, title: "", arguments: [
-                i.name,
-                i.path.replace("${workspaceFolder}", vscode.workspace.rootPath),
-                i.param.replace("${workspaceFolder}", vscode.workspace.rootPath)],
-            };
+            cmd = Utils.ReturnCmd(i);
             return new ShortcutClass(i.id, i.name, i.path, i.type, i.param, vscode.TreeItemCollapsibleState.None, cmd);
           }
         }));

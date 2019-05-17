@@ -1,9 +1,7 @@
 "use strict";
 
-import { exec, execFile, spawn } from "child_process";
-import fs = require("fs");
+import { exec, spawn } from "child_process";
 import { window } from "vscode";
-import * as vscode from "vscode";
 
 export interface IApplication {
     name: string;
@@ -14,6 +12,7 @@ export interface IApplication {
 export class AppRunner {
 
     public static run(appName: string, appPath: string, param?: string) {
+        appPath = '\"' + appPath + '\"';
         if (param) { appPath += " " + param; }
         exec('start \"app cmd\" ' +
             appPath, (error, stdout, stderr) => {
@@ -22,8 +21,6 @@ export class AppRunner {
                     console.log("error: " + error);
                 } else {
                     window.showInformationMessage("Command finalized.");
-                    console.log("stdout: " + stdout);
-                    console.log("stderr: " + stderr);
                 }
             });
     }

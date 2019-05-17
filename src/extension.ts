@@ -3,6 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
+import fs = require("fs");
 import { AppRunner } from "./AppRunner";
 import { PathUtils } from "./PathUtils";
 import { CFG_FILE, ShortcutProvider } from "./shortcutProvider";
@@ -15,13 +16,12 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
 
+    const shortcutStorage: ShortcutStorage = new ShortcutStorage(PathUtils.getProjectFilePath(CFG_FILE));
+    shortcutStorage.load();
+    const shortcutProvider = new ShortcutProvider(shortcutStorage);
     Apps();
 
     function Apps() {
-        const pop = (node) => {
-            shortcutStorage.pop(node.label);
-        };
-
         const addShortcut = (node, desc, type?) => {
             const nodeName = node ? node.id : "";
             vscode.window.showInputBox({
@@ -69,9 +69,6 @@ export function activate(context: vscode.ExtensionContext) {
                 });
         };
 
-        const shortcutStorage: ShortcutStorage = new ShortcutStorage(PathUtils.getProjectFilePath(CFG_FILE));
-        shortcutStorage.load();
-        const shortcutProvider = new ShortcutProvider(shortcutStorage);
         vscode.window.registerTreeDataProvider("shortcutsProvider", shortcutProvider);
 
         const refresh = vscode.commands.registerCommand("shortcutsProvider.refreshEntry",
@@ -101,6 +98,12 @@ export function activate(context: vscode.ExtensionContext) {
                 AppRunner.runCMD(path, param);
             });
 
+        const viewPath = vscode.commands.registerCommand("shortcutsProvider.view",
+            (node) => {
+                AppRunner.run("", node.apppath.split("\\").slice(0, -1).join("\\")
+                    .replace("${workspaceFolder}", vscode.workspace.rootPath));
+            });
+
         context.subscriptions.push(refresh);
         context.subscriptions.push(edit);
         context.subscriptions.push(addFolder);
@@ -108,5 +111,49 @@ export function activate(context: vscode.ExtensionContext) {
         context.subscriptions.push(run);
         context.subscriptions.push(runCMD);
         context.subscriptions.push(remove);
+        context.subscriptions.push(viewPath);
     }
+
+    function listShurtcuts(forceNewWindow: boolean) {
+        let items = [];
+        items = shortcutStorage.mapForQuick();
+
+        function onRejectlistShurtcuts(reason) {
+            vscode.window.showInformationMessage(`Error loading projects: ${reason}`);
+        }
+
+        // promisses
+        function onResolve(selected) {
+            if (!selected) {
+                return;
+            }
+
+            if (!fs.existsSync(selected.cmd.arguments[1].toString())) {
+                vscode.window.showErrorMessage("Shurtcut does not exist or is unavailable.");
+            } else {
+                vscode.commands.executeCommand(selected.cmd.command, ...selected.cmd.arguments);
+            }
+        }
+
+        const options = {
+            matchOnDetail: false,
+            placeHolder: "Loading Apps (pick one to open)"
+        } as vscode.QuickPickOptions;
+
+        getShurtcuts(items)
+            .then((folders) => {
+                vscode.window.showQuickPick(folders as any[], options)
+                    .then(onResolve, onRejectlistShurtcuts);
+            });
+    }
+
+    function getShurtcuts(itemsSorted: any[]): Promise<{}> {
+        return new Promise((resolve, reject) => {
+            resolve(itemsSorted);
+        });
+    }
+
+    context.subscriptions.push(vscode.commands.registerCommand("shortcutsProvider.listShurtcuts", () => {
+        listShurtcuts(false);
+    }));
 }

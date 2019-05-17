@@ -18,6 +18,6 @@ export class ShortcutClass extends vscode.TreeItem {
         public AppsList?: ShortcutClass[],
     ) {
         super(label, collapsibleState);
-        this.resourceUri = vscode.Uri.parse(apppath);
+        this.resourceUri = vscode.Uri.file(apppath);
     }
 }

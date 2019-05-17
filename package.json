@@ -2,18 +2,23 @@
   "name": "shortcut",
   "displayName": "Useful Shortcuts",
   "description": "Extentension that holds all your shortcuts.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "jeisonjha",
   "author": {
     "name": "Jeison Azevedo",
     "email": "j3ison@gmail.com"
   },
   "engines": {
-    "vscode": "^1.21.0"
+    "vscode": "^1.25.0"
   },
+  "icon": "img/icon.png",
   "categories": [
     "Other"
   ],
+  "galleryBanner": {
+    "theme": "dark",
+    "color": "#252526"
+  },
   "keywords": [
     "shortcut"
   ],
@@ -66,6 +71,14 @@
       {
         "command": "shortcutsProvider.remove",
         "title": "Remove shortcut"
+      },
+      {
+        "command": "shortcutsProvider.view",
+        "title": "View path"
+      },
+      {
+        "command": "shortcutsProvider.listShurtcuts",
+        "title": "List shurtcuts"
       }
     ],
     "views": {
@@ -119,12 +132,17 @@
           "command": "shortcutsProvider.remove",
           "when": "viewItem == shortcutNode",
           "group": "folderNode"
+        },
+        {
+          "command": "shortcutsProvider.view",
+          "when": "viewItem == shortcutNode",
+          "group": "folderNode"
         }
       ]
     }
   },
   "scripts": {
-    "vscode:prepublish": "tsc -p ./",
+    "vscode:prepublish": "tsc",
     "compile": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
@@ -133,8 +151,8 @@
     "@types/mocha": "^2.2.32",
     "tslint": "5.11.0",
     "typescript": "^2.0.3",
-    "mocha": "^2.3.3",
-    "vscode": "^1.1.17"
+    "mocha": "^4.0.1",
+    "vscode": "^1.1.18"
   },
   "dependencies": {
     "node-uuid": "^1.4.7"

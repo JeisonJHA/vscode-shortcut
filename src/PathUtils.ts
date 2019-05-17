@@ -17,6 +17,13 @@ export class PathUtils {
     return projectFile;
   }
 
+  public static getFileContent(filename: string) {
+    const f = PathUtils.getProjectFilePath(filename);
+    if (fs.existsSync(f)) {
+      return fs.readFileSync(f, "utf8").toString();
+    }
+  }
+
   public static getChannelPath(): string {
     return vscode.env.appName.replace("Visual Studio ", "");
   }
