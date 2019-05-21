@@ -77,8 +77,8 @@
         "title": "View path"
       },
       {
-        "command": "shortcutsProvider.listShurtcuts",
-        "title": "List shurtcuts"
+        "command": "shortcutsProvider.listShortcuts",
+        "title": "Useful Shortcuts: List shortcuts"
       }
     ],
     "views": {
@@ -129,14 +129,35 @@
           "group": "folderNode"
         },
         {
-          "command": "shortcutsProvider.remove",
-          "when": "viewItem == shortcutNode",
-          "group": "folderNode"
-        },
-        {
           "command": "shortcutsProvider.view",
           "when": "viewItem == shortcutNode",
           "group": "folderNode"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "shortcutsProvider.refreshEntry",
+          "when": "false"
+        },
+        {
+          "command": "shortcutsProvider.editShortcut",
+          "when": "false"
+        },
+        {
+          "command": "shortcutsProvider.addFolder",
+          "when": "false"
+        },
+        {
+          "command": "shortcutsProvider.addShortcut",
+          "when": "false"
+        },
+        {
+          "command": "shortcutsProvider.remove",
+          "when": "false"
+        },
+        {
+          "command": "shortcutsProvider.view",
+          "when": "false"
         }
       ]
     }

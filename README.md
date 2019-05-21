@@ -12,6 +12,10 @@ ${workspaceFolder}
   ${workspaceFolder}\\app\\app.exe
 ```
 
+## Commands
+
+- `List shortcuts`: command will list all yours shortcuts to select on the picker.
+
 # Icons
 
 The menu items are from vscode and the shortcuts themselves are of the theme that is in use.
